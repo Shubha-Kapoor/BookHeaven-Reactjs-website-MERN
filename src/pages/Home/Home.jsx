@@ -28,6 +28,7 @@ function Home({ setCurrentPage, onBookClick, books }) {
               key={book._id || book.id} 
               book={book} 
               onBookClick={onBookClick} 
+              
             />
           ))}
         </div>
