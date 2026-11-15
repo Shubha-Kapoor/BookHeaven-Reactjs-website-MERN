@@ -1,163 +1,82 @@
+Here is your complete, fully polished, professional **`README.md`** file for your repository. It includes all your final MERN stack architectural details, authentication security layers, role-based access control (RBAC), theme systems, and database workflows!
 
+---
+
+```markdown
 # 📚 BookHeaven — Your Digital Bookshelf, Organized
 
-> **A MERN Stack Digital Library & Book Access Management System**
+> **A Full-Stack MERN Digital Library & Book Access Management System**
 
-BookHeaven is a modern, aesthetically designed digital library platform that allows users to explore, search, filter, manage, and access books through an interactive web interface.
+BookHeaven is a modern, aesthetically designed digital library platform that allows users to explore, search, filter, manage, and access books through an interactive web interface. 
 
-Originally developed as a React-based frontend project, BookHeaven is now being upgraded into a complete **MERN Stack application** with a RESTful backend and persistent MongoDB database storage.
-
-The project focuses on creating a smooth digital library experience through reusable React components, dynamic themes, real-time search, book management, and database-driven content.
+Built as a complete **MERN Stack application**, BookHeaven features a secure RESTful backend, JWT-based authentication with robust client and server-side validation, role-based access control (RBAC), and persistent cloud-hosted MongoDB Atlas storage.
 
 ---
 
 ## 🌟 Overview
 
-BookHeaven is designed to provide a clean and engaging way to organize and explore a digital book collection.
+BookHeaven bridges creative, customizable UI design with robust backend management. 
 
-The application combines a creative user interface with functional library management features. Users can browse books, search by title or author, filter books by category, view detailed information, and add new books to the collection.
-
-The current MERN architecture allows BookHeaven to move from temporary browser-based data toward persistent database storage.
+The application features role-segregated navigation, allowing regular readers to browse collections, view detailed synopses, and check subscriber-exclusive books, while administrators have secure, token-authenticated access to manage and expand the digital library.
 
 ### Application Flow
 
 ```text
-                ┌───────────────────┐
-                │   React Frontend  │
-                │   BookHeaven UI   │
-                └─────────┬─────────┘
-                          │
-                    HTTP / REST API
-                          │
-                          ▼
-                ┌───────────────────┐
-                │ Express.js Server │
-                │   Node.js API     │
-                └─────────┬─────────┘
-                          │
-                       Mongoose
-                          │
-                          ▼
-                ┌───────────────────┐
-                │  MongoDB Atlas    │
-                │  Books Database   │
-                └───────────────────┘
-````
+                    ┌───────────────────┐
+                    │  React Frontend   │
+                    │   BookHeaven UI   │
+                    └─────────┬─────────┘
+                              │
+                      HTTP / REST API (Axios)
+                              │
+                              ▼
+                    ┌───────────────────┐
+                    │ Express.js Server │
+                    │   Node.js API     │
+                    └─────────┬─────────┘
+                              │
+                      Mongoose ODM
+                              │
+                              ▼
+                    ┌───────────────────┐
+                    │   MongoDB Atlas   │
+                    │ bookheaven Database │
+                    └───────────────────┘
+
+```
 
 ---
 
-# ✨ Features
+# ✨ Core Features
 
-## 📚 Book Management
+## 🔐 Secure Authentication & Role-Based Access Control (RBAC)
 
-* Browse a digital collection of books
-* View detailed book information
-* Add new books to the library
-* Remove books from the collection
-* Store book information in MongoDB
-* Persistent database-driven catalog management
+* **JWT & Bcrypt Security:** Secure user registration and login utilizing JSON Web Tokens and salted password hashing (`bcryptjs`).
+* **Input Validation & Sanitization:** Custom frontend regex email validation and password length checks (minimum 6 characters) paired with backend API safety guardrails to ensure data integrity.
+* **Admin vs. Reader Segregation:** Role-based permissions restrict administrative actions (such as adding new books) exclusively to verified admin accounts (`isAdmin: true`).
+* **Dynamic Navigation:** The UI adapts instantly based on user roles and login states, displaying profile views, custom badge indicators, and management controls accordingly.
 
----
+## 📚 Book & Catalog Management
 
-## 🔍 Real-Time Search
+* **Persistent Database Storage:** All books, categories, and user profiles are securely stored and fetched from MongoDB Atlas (`bookheaven` cluster).
+* **Premium Book Badges:** Support for subscriber-exclusive titles highlighted with dynamic **✨ Premium** badges across catalog views.
+* **Detailed Book Information:** Interactive views displaying title, author, category, rating, publication year, synopsis, and direct reader access links.
 
-Users can search dynamically through the book collection using:
+## 🔍 Real-Time Search & Category Filtering
 
-* Book title
-* Author name
-
-The interface updates the displayed results in real time as the user types.
-
----
-
-## 🏷️ Category Filtering
-
-Books can be organized and filtered through category selection.
-
-This allows users to quickly explore different genres and collections.
-
----
-
-## 📖 Book Details
-
-Each book can display detailed information such as:
-
-* Title
-* Author
-* Category
-* Description
-* Cover image
-* Rating
-* Additional publication information
-
----
-
-## ✍️ Add Book Functionality
-
-BookHeaven includes a controlled form interface for adding books to the collection.
-
-The form supports structured book data entry and is being integrated with the MERN backend so that newly added books can be permanently stored in MongoDB.
-
----
+* Users can search dynamically through the book collection using titles or author names.
+* Category filtering enables quick exploration across genres like Fiction, Sci-Fi, Fantasy, Biography, and Tech.
 
 ## 🎨 Dynamic Theme System
 
-BookHeaven includes multiple visual themes powered by CSS custom properties.
-
-Available themes include:
+BookHeaven includes multiple visual themes powered by CSS custom properties, letting users instantly shift the app's aesthetic vibe:
 
 * 🍵 Matcha Latte
-* 🩵 Cyan Blue Cute
-* 💜 Lavender Milk
+* 🔹 Cyan Blue
+* 🔮 Lavender Milk
 * 🧋 Taro Boba
-* 🖤 Black Pebble
+* ⚫ Black Pebble
 * 🧋 Classic Milk Tea
-
-The themes dynamically update the application's visual appearance while maintaining the same component structure.
-
----
-
-## ⚡ Single Page Application Experience
-
-BookHeaven provides a smooth application experience without traditional page reloads.
-
-The frontend uses React component rendering and state-based page switching to move between different application views.
-
-Views include:
-
-* Home
-* Books
-* Book Details
-* Add Book
-* Authentication
-* Not Found
-
----
-
-## 💾 Persistent Data Storage
-
-The project is being upgraded from browser-based data persistence to database storage.
-
-Current architecture:
-
-```text
-React
-   │
-   ▼
-Express REST API
-   │
-   ▼
-MongoDB Atlas
-```
-
-MongoDB is used to store application data such as:
-
-```text
-Books
-Categories
-Users
-Future authentication data
-```
 
 ---
 
@@ -165,46 +84,37 @@ Future authentication data
 
 ## Frontend
 
-| Technology      | Purpose                           |
-| --------------- | --------------------------------- |
-| React 18        | Building reusable user interfaces |
-| Vite 5          | Frontend development environment  |
-| JavaScript ES6+ | Application logic                 |
-| HTML5           | Application structure             |
-| CSS3            | Styling and responsive design     |
-| CSS Variables   | Dynamic theme system              |
-
-### React Concepts Used
-
-* Functional Components
-* `useState`
-* `useEffect`
-* Component Props
-* Conditional Rendering
-* Controlled Forms
-* State-Based View Switching
+| Technology | Purpose |
+| --- | --- |
+| React 18 | Building reusable user interfaces |
+| Vite 5 | Fast frontend building and dev |
+| JavaScript ES6+ | Application logic & state management |
+| CSS3 | Styling and responsive design |
+| CSS Variables | Dynamic multi-theme architecture |
+| Axios | HTTP client for REST API requests |
 
 ---
 
 ## Backend
 
-| Technology | Purpose                         |
-| ---------- | ------------------------------- |
-| Node.js    | JavaScript runtime              |
-| Express.js | Backend API development         |
-| Mongoose   | MongoDB object modeling         |
-| CORS       | Frontend-backend communication  |
-| dotenv     | Environment variable management |
-| Nodemon    | Backend development server      |
+| Technology | Purpose |
+| --- | --- |
+| Node.js | JavaScript runtime environment |
+| Express.js | REST API routing & middleware |
+| Mongoose | MongoDB object modeling |
+| bcryptjs | Secure password hashing |
+| jsonwebtoken | JWT authentication handling |
+| CORS | Cross-Origin Resource Sharing |
+| dotenv | Environment variable security |
 
 ---
 
 ## Database
 
-| Technology      | Purpose                               |
-| --------------- | ------------------------------------- |
-| MongoDB Atlas   | Cloud-hosted NoSQL database           |
-| MongoDB Compass | Database visualization and management |
+| Technology | Purpose |
+| --- | --- |
+| MongoDB Atlas | Cloud-hosted NoSQL database cluster |
+| MongoDB Compass | Local database visualization & checks |
 
 ---
 
@@ -213,113 +123,73 @@ Future authentication data
 ```text
 book_store_react/
 │
-├── server/                              # Backend API
+├── server/                              # Backend Express API
 │   │
 │   ├── config/
-│   │   └── db.js                        # MongoDB connection
+│   │   └── db.js                        # MongoDB Atlas connection
 │   │
-│   ├── controllers/                     # Application logic
+│   ├── controllers/                     # Route business logic
+│   │   ├── authController.js            # Auth logic with validation & hashing
+│   │   ├── bookController.js            # Book CRUD operations
+│   │   └── userController.js            # User favorites & subscriptions
 │   │
-│   ├── middleware/                      # Custom middleware
+│   ├── middleware/                      # Auth & Admin protection
+│   │   └── authMiddleware.js            # JWT token verifier
 │   │
-│   ├── models/
-│   │   └── Book.js                      # Book database schema
+│   ├── models/                          # Mongoose Schemas
+│   │   ├── Book.js                      # Book schema (with isPremium flag)
+│   │   └── User.js                      # User schema (with isAdmin flag)
 │   │
-│   ├── routes/
-│   │   └── bookRoutes.js                # Book API routes
+│   ├── routes/                          # API endpoints
+│   │   ├── authRoutes.js
+│   │   ├── bookRoutes.js
+│   │   └── userRoutes.js
 │   │
-│   ├── uploads/
-│   │   ├── books/                       # Book PDF uploads
-│   │   └── covers/                      # Cover image uploads
-│   │
-│   ├── .env                             # Environment variables
+│   ├── .env                             # Backend environment variables
 │   ├── .gitignore
 │   ├── package.json
 │   └── server.js                        # Express server entry point
 │
 │
-├── src/                                 # React frontend
+├── src/                                 # React Frontend
 │   │
-│   ├── assets/                          # Images and static assets
+│   ├── assets/                          # Static graphics & images
 │   │
 │   ├── components/                      # Reusable UI components
-│   │   │
 │   │   ├── BookCard/
-│   │   │   ├── BookCard.jsx
-│   │   │   └── BookCard.css
-│   │   │
-│   │   ├── CategoryFilter/
-│   │   │   ├── CategoryFilter.jsx
-│   │   │   └── CategoryFilter.css
-│   │   │
 │   │   ├── Footer/
-│   │   │   ├── Footer.jsx
-│   │   │   └── Footer.css
-│   │   │
-│   │   ├── Hero/
-│   │   │   ├── Hero.jsx
-│   │   │   └── Hero.css
-│   │   │
 │   │   ├── Navbar/
-│   │   │   ├── Navbar.jsx
-│   │   │   └── Navbar.css
-│   │   │
-│   │   └── SearchBar/
-│   │       ├── SearchBar.jsx
-│   │       └── SearchBar.css
+│   │   └── ...
 │   │
-│   ├── data/
-│   │   └── Books.js                     # Initial frontend book data
-│   │
-│   ├── pages/
-│   │   │
+│   ├── pages/                           # Application views
 │   │   ├── AddBook/
-│   │   │   ├── AddBook.jsx
-│   │   │   └── AddBook.css
-│   │   │
-│   │   ├── Auth/
-│   │   │   ├── Auth.jsx
-│   │   │   └── Auth.css
-│   │   │
+│   │   ├── Auth/                        # Login & Registration (with inline validation)
 │   │   ├── BookDetails/
-│   │   │   ├── BookDetails.jsx
-│   │   │   └── BookDetails.css
-│   │   │
-│   │   ├── Books/
-│   │   │   ├── Books.jsx
-│   │   │   └── Books.css
-│   │   │
+│   │   ├── Books/                       # Catalog browse view
 │   │   ├── Home/
-│   │   │   ├── Home.jsx
-│   │   │   └── Home.css
-│   │   │
+│   │   ├── Profile/                     # User & Reader profile
 │   │   └── NotFound/
-│   │       ├── NotFound.jsx
-│   │       └── NotFound.css
 │   │
 │   ├── services/
-│   │   └── api.js                       # API communication layer
+│   │   └── api.js                       # Axios instance configuration
 │   │
-│   ├── App.css                          # Global application styles
-│   ├── App.jsx                          # Main application state
-│   ├── index.css                        # Base styles
-│   └── main.jsx                         # React entry point
-│
-├── public/
+│   ├── App.css
+│   ├── App.jsx                          # Main routing & state controller
+│   ├── index.css
+│   └── main.jsx
 │
 ├── .gitignore
 ├── index.html
 ├── package.json                         # Frontend dependencies
 └── vite.config.js
+
 ```
 
 ---
 
-# 🗄️ Database Architecture
+# 🗄️ Database Architecture (`bookheaven`)
 
-The Book model stores information about each book in MongoDB.
-
-Example document:
+### Book Schema Example
 
 ```json
 {
@@ -327,61 +197,51 @@ Example document:
   "author": "James Clear",
   "category": "Self Help",
   "description": "A practical guide to building better habits.",
-  "coverImage": "image-url",
+  "cover": "image-url",
   "rating": 4.8,
-  "createdAt": "2026-08-30"
+  "publishedYear": 2018,
+  "isPremium": false,
+  "createdAt": "2026-11-15"
 }
+
 ```
 
-MongoDB automatically generates a unique document ID:
-
-```text
-_id
-```
-
-which can be used by the application to:
-
-* Fetch a specific book
-* Update a book
-* Delete a book
-* Display detailed information
-
----
-
-# 📡 REST API
-
-## API Base URL
-
-```text
-http://localhost:5000
-```
-
-### Health Check
-
-```text
-GET /
-```
-
-Response:
+### User Schema Example
 
 ```json
 {
-  "message": "Welcome to BookHeaven API!",
-  "status": "Server and MongoDB are running successfully"
+  "name": "Shubha Kapoor",
+  "email": "admin@gmail.com",
+  "password": "hashed_password_via_bcrypt",
+  "isAdmin": true,
+  "isSubscribed": false,
+  "createdAt": "2026-11-15"
 }
+
 ```
 
 ---
 
-## Books API
+# 📡 REST API Endpoints
 
-| Method   | Endpoint         | Description       |
-| -------- | ---------------- | ----------------- |
-| `GET`    | `/api/books`     | Fetch all books   |
-| `GET`    | `/api/books/:id` | Fetch one book    |
-| `POST`   | `/api/books`     | Create a new book |
-| `PUT`    | `/api/books/:id` | Update a book     |
-| `DELETE` | `/api/books/:id` | Delete a book     |
+## Base URL
+
+```text
+http://localhost:5000/api
+
+```
+
+| Method | Endpoint | Access | Description |
+| --- | --- | --- | --- |
+| `GET` | `/` | Public | API Health check |
+| `POST` | `/auth/register` | Public | Register with regex & password checks |
+| `POST` | `/auth/login` | Public | Authenticate user & issue JWT token |
+| `GET` | `/books` | Public | Fetch all books from MongoDB |
+| `GET` | `/books/:id` | Public | Fetch single book details |
+| `POST` | `/books` | Admin Only | Add a new book to database |
+| `PUT` | `/books/:id` | Admin Only | Update an existing book |
+| `DELETE` | `/books/:id` | Admin Only | Remove a book from database |
+| `GET` | `/users/favorites` | Private | Fetch user's favorite books |
 
 ---
 
@@ -389,235 +249,83 @@ Response:
 
 ## Prerequisites
 
-Before running the project, install:
+Ensure you have installed:
 
 * Node.js v18 or later
 * npm
-* MongoDB Atlas account or local MongoDB
-* MongoDB Compass *(optional but recommended)*
+* MongoDB Atlas account
 
 ---
 
-# 1️⃣ Clone the Repository
+### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/Shubha-Kapoor/book_store_react.git
+git clone [https://github.com/Shubha-Kapoor/book_store_react.git](https://github.com/Shubha-Kapoor/book_store_react.git)
 cd book_store_react
+
 ```
 
----
-
-# 2️⃣ Install Frontend Dependencies
+### 2️⃣ Install Frontend Dependencies
 
 From the project root:
 
 ```bash
 npm install
+
 ```
 
----
+### 3️⃣ Configure the Backend
 
-# 3️⃣ Configure the Backend
-
-Navigate to the backend folder:
+Navigate to the server directory and install dependencies:
 
 ```bash
 cd server
-```
-
-Install backend dependencies:
-
-```bash
 npm install
+
 ```
 
----
+### 4️⃣ Create Environment Variables
 
-# 4️⃣ Create Environment Variables
-
-Create:
-
-```text
-server/.env
-```
-
-Add:
+Create a file named `.env` inside the `server/` folder:
 
 ```env
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-```
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/bookheaven?retryWrites=true&w=majority
+JWT_SECRET=your_super_secret_jwt_key
 
-Example structure:
-
-```text
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/bookheaven
 ```
 
 > ⚠️ Never upload your `.env` file to GitHub.
 
-Make sure `.env` is included in:
-
-```text
-server/.gitignore
-```
-
-Example:
-
-```gitignore
-node_modules
-.env
-```
-
----
-
-# 5️⃣ Start the Backend
+### 5️⃣ Start the Backend Server
 
 Inside the `server` directory:
 
 ```bash
 npm run dev
+
 ```
 
-The terminal should display something similar to:
+### 6️⃣ Start the Frontend Application
 
-```text
-MongoDB connected successfully: cluster.mongodb.net
-Server is running on port 5000
-```
-
----
-
-# 6️⃣ Start the Frontend
-
-Open another terminal and return to the project root:
+Open a new terminal, return to the project root, and run:
 
 ```bash
 cd ..
-```
-
-Then run:
-
-```bash
 npm run dev
+
 ```
 
-The frontend will typically run at:
-
-```text
-http://localhost:5173
-```
-
----
-
-# 🔄 Development Workflow
-
-During development, BookHeaven runs two separate applications.
-
-### Terminal 1
-
-```text
-Frontend
-```
-
-```bash
-npm run dev
-```
-
-### Terminal 2
-
-```text
-Backend
-```
-
-```bash
-cd server
-npm run dev
-```
-
-Architecture:
-
-```text
-Browser
-   │
-   ▼
-React + Vite
-localhost:5173
-   │
-   ▼
-Express API
-localhost:5000
-   │
-   ▼
-MongoDB Atlas
-```
-
----
-
-# 🎨 Theme System
-
-The interface is powered by CSS custom properties.
-
-Example:
-
-```css
-:root {
-  --primary-color: #8b5cf6;
-  --secondary-color: #f5f3ff;
-  --background-color: #ffffff;
-  --text-color: #2d2d2d;
-}
-```
-
-When the user changes themes, the application updates its CSS variables to create a different visual identity without rebuilding every component.
-
----
-
-# 🧩 Current Project Architecture
-
-BookHeaven is transitioning from:
-
-```text
-React
-  │
-  ├── Static Book Data
-  │
-  └── localStorage
-```
-
-to:
-
-```text
-React Frontend
-      │
-      ▼
-Express REST API
-      │
-      ▼
-MongoDB Atlas
-```
-
-This migration allows book information to become persistent and database-driven.
+The frontend will run at **`http://localhost:5173`**.
 
 ---
 
 # 🔮 Future Scope
 
-The following features are planned for the next stages of BookHeaven:
-
-* 🔐 JWT-based user authentication
-* 👤 User registration and login
-* 🛡️ Role-based authorization
-* 👩‍💼 Admin dashboard
-* 📖 PDF book access
-* 📤 PDF upload functionality
-* 🖼️ Book cover image upload
-* ☁️ Cloud storage integration
-* 📚 Personal user bookshelves
-* ❤️ Favourite books
-* 📖 Reading history
-* 🔄 Full CRUD book management
-* 🌐 Production deployment
+* 💳 Subscription payment gateway integration (Stripe / Razorpay) for premium tiers
+* ☁️ Cloud image and PDF file storage integration (Cloudinary)
+* ❤️ Personal user reading lists and favorites management
+* 🌐 Production cloud deployment (Render & Vercel)
 
 ---
 
@@ -625,19 +333,21 @@ The following features are planned for the next stages of BookHeaven:
 
 **Shubha Kapoor**
 
-* 🎓 BCA Student
+* 🎓 BCA Student & Developer
 * 💻 React & MERN Stack Developer
-* 🎨 UI/UX and Creative Frontend Development Enthusiast
+* 🎨 UI/UX & Tech-Driven Storytelling Enthusiast
 
 ### Connect with me
 
-* GitHub: [Shubha Kapoor's GitHub](https://github.com/Shubha-Kapoor?utm_source=chatgpt.com)
-* LinkedIn: [Shubha Kapoor's LinkedIn](https://www.linkedin.com/in/shubha-kapoor-a3963a308?utm_source=chatgpt.com)
+* **GitHub:** [Shubha Kapoor's GitHub](https://github.com/Shubha-Kapoor)
+* **LinkedIn:** [Shubha Kapoor's LinkedIn](https://www.linkedin.com/in/shubha-kapoor-a3963a308)
 
 ---
 
 # 📄 License
 
-This project is created for educational and learning purposes.
+This project is created for educational and professional portfolio purposes.
 
----
+```
+
+```
