@@ -1,8 +1,4 @@
-Here is your complete, fully polished, professional **`README.md`** file for your repository. It includes all your final MERN stack architectural details, authentication security layers, role-based access control (RBAC), theme systems, and database workflows!
 
----
-
-```markdown
 # 📚 BookHeaven — Your Digital Bookshelf, Organized
 
 > **A Full-Stack MERN Digital Library & Book Access Management System**
