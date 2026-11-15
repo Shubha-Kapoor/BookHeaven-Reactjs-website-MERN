@@ -3,18 +3,16 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Books from "./pages/Books/Books.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
 import BookDetails from "./pages/BookDetails/BookDetails.jsx";
 import AddBook from "./pages/AddBook/AddBook.jsx";
-import Auth from "./pages/Auth/Auth.jsx"; // Imported Page
-import initialBooks from "./components/Data/Books.js"
+import Auth from "./pages/Auth/Auth.jsx";
+import API from "./services/api"; // Live backend Axios instance
 import "./App.css";
 
 function App() {
-  const [books, setBooks] = useState(() => {
-    const savedBooks = localStorage.getItem("library_books_final");
-    return savedBooks ? JSON.parse(savedBooks) : initialBooks;
-    console.log(initialBooks)
-  });
+  const [books, setBooks] = useState([]);
+  const [loadingBooks, setLoadingBooks] = useState(true);
 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("app_theme") || "matcha";
@@ -25,9 +23,20 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  // Fetch live books from MongoDB Atlas on component mount
   useEffect(() => {
-    localStorage.setItem("library_books_final", JSON.stringify(books));
-  }, [books]);
+    const fetchLiveBooks = async () => {
+      try {
+        const { data } = await API.get('/books');
+        setBooks(data);
+        setLoadingBooks(false);
+      } catch (error) {
+        console.error("Failed to fetch books from database:", error);
+        setLoadingBooks(false);
+      }
+    };
+    fetchLiveBooks();
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -47,7 +56,6 @@ function App() {
   const renderPage = () => {
     switch (currentPage) {
       case "home":
-        // CHANGED: slice count from 4 to 6 to display 6 cards on home dashboard view
         return (
           <Home
             setCurrentPage={setCurrentPage}
@@ -66,14 +74,16 @@ function App() {
             onBookClick={handleViewBookDetails}
           />
         );
-      case "details":
-        const selectedBook = books.find((b) => b.id === selectedBookId);
+      case "details": {
+        // Note: MongoDB documents use '_id' instead of local 'id'
+        const selectedBook = books.find((b) => b._id === selectedBookId || b.id === selectedBookId);
         return (
           <BookDetails
             book={selectedBook}
             onBack={() => setCurrentPage("books")}
           />
         );
+      }
       case "add":
         return (
           <AddBook
@@ -83,6 +93,8 @@ function App() {
         );
       case "auth":
         return <Auth setCurrentPage={setCurrentPage} />;
+      case "profile":
+        return <Profile setCurrentPage={setCurrentPage} />;
       default:
         return (
           <Home
@@ -92,7 +104,7 @@ function App() {
           />
         );
     }
-  }
+  };
 
   return (
     <div className="app-container">
@@ -102,7 +114,15 @@ function App() {
         theme={theme}
         setTheme={setTheme}
       />
-      <main className="main-content">{renderPage()}</main>
+      <main className="main-content">
+        {loadingBooks ? (
+          <div style={{ textAlign: 'center', padding: '3rem', fontWeight: 600, color: 'var(--text-main)' }}>
+            Loading live library books from MongoDB...
+          </div>
+        ) : (
+          renderPage()
+        )}
+      </main>
       <Footer />
     </div>
   );

@@ -43,7 +43,20 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.04);
 }
 
-/* 0.5rem = 8px1rem = 16px1.25rem = 20px1.5rem = 24px2rem = 32px2.5rem = 40px3rem = 48px */
+/* Premium Badge Styles */
+.book-card-premium-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+  z-index: 2;
+}
 
 .card-body {
   padding: 1.5rem;
@@ -116,7 +129,6 @@
   transition: all 0.2s ease;
 }
 
-/* FIXED: Hover states are isolated so it won't highlight automatically when the card hovers */
 .card-action-pill-btn:hover {
   background-color: var(--primary-color) !important;
   color: #ffffff !important;

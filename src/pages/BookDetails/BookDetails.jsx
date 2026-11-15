@@ -34,6 +34,21 @@ function BookDetails({ book, onBack }) {
               {book.synopsis || book.description || "No synopsis available."}
             </p>
           </div>
+
+          {/* Optional PDF Reader Button if MongoDB record has a valid pdfUrl */}
+          {book.pdfUrl && (
+            <div style={{ marginTop: '1.5rem' }}>
+              <a 
+                href={book.pdfUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="submit-btn" 
+                style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}
+              >
+                📖 Read Book PDF
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>

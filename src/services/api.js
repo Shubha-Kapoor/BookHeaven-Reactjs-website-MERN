@@ -1,38 +1,51 @@
-import { initialBooks } from '../data/books.js';
+import axios from "axios";
 
-// Helper to simulate a network request delay (e.g., 500ms)
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+// Create Axios instance pointing to your Express backend
+const API = axios.create({
+  baseURL: "http://localhost:5000/api",
+});
 
+// Automatically attach JWT token for authenticated requests
+API.interceptors.request.use((req) => {
+  const userInfo = localStorage.getItem("userInfo");
+  if (userInfo) {
+    const { token } = JSON.parse(userInfo);
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
+});
+
+// Book API services mapped to your live backend
 export const bookApi = {
-  /**
-   * Fetches all books from local storage or returns initial mock data
-   */
-  getAllBooks: async () => {
-    await delay(500); // Simulate network latency
-    const savedBooks = localStorage.getItem('library_books');
-    return savedBooks ? JSON.parse(savedBooks) : initialBooks;
+  // Fetch all books (supports optional search and category filters)
+  getAllBooks: async (category = "All", search = "") => {
+    const { data } = await API.get(`/books?category=${category}&search=${search}`);
+    return data;
   },
 
-  /**
-   * Saves a new book to the local storage shelf
-   */
+  // Add a new book (Admin only)
   addBook: async (newBook) => {
-    await delay(400); 
-    const savedBooks = localStorage.getItem('library_books');
-    const currentBooks = savedBooks ? JSON.parse(savedBooks) : initialBooks;
-    
-    const updatedBooks = [newBook, ...currentBooks];
-    localStorage.setItem('library_books', JSON.stringify(updatedBooks));
-    return newBook;
+    const { data } = await API.post("/books", newBook);
+    return data;
   },
 
-  /**
-   * Fetches a specific book details by its unique ID
-   */
+  // Get a single book by ID
   getBookById: async (id) => {
-    await delay(300);
-    const savedBooks = localStorage.getItem('library_books');
-    const currentBooks = savedBooks ? JSON.parse(savedBooks) : initialBooks;
-    return currentBooks.find(book => book.id === Number(id)) || null;
+    const { data } = await API.get(`/books/${id}`);
+    return data;
+  },
+
+  // Toggle favorite (Wishlist)
+  toggleFavorite: async (bookId) => {
+    const { data } = await API.post(`/users/favorite/${bookId}`);
+    return data;
+  },
+
+  // Update subscription status
+  subscribeUser: async () => {
+    const { data } = await API.put("/users/subscribe");
+    return data;
   }
 };
+
+export default API;

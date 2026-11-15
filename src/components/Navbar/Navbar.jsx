@@ -24,6 +24,9 @@ function Navbar({ setCurrentPage, currentPage, theme, setTheme }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Retrieve current logged-in user info safely
+  const userInfo = JSON.parse(localStorage.getItem('userInfo')) || null;
+
   return (
     <nav className="navbar">
       <div className="nav-brand" onClick={() => setCurrentPage('home')}>
@@ -56,9 +59,30 @@ function Navbar({ setCurrentPage, currentPage, theme, setTheme }) {
         <div className="nav-links">
           <button className={`nav-btn ${currentPage === 'home' ? 'active' : ''}`} onClick={() => setCurrentPage('home')}>Home</button>
           <button className={`nav-btn ${currentPage === 'books' ? 'active' : ''}`} onClick={() => setCurrentPage('books')}>Browse</button>
-          <button className={`nav-btn ${currentPage === 'add' ? 'active' : ''}`} onClick={() => setCurrentPage('add')}>+ Add</button>
-          {/* Placed next to add button */}
-          <button className={`nav-btn login ${currentPage === 'auth' ? 'active' : ''}`} onClick={() => setCurrentPage('auth')}>Login</button>
+          
+          {/* Role-Based Guard: Only show '+ Add' button if the logged-in user is an admin */}
+          {userInfo && userInfo.isAdmin && (
+            <button className={`nav-btn ${currentPage === 'add' ? 'active' : ''}`} onClick={() => setCurrentPage('add')}>+ Add</button>
+          )}
+          
+          {/* Profile & Auth Management */}
+          {userInfo ? (
+            <>
+              <button className={`nav-btn ${currentPage === 'profile' ? 'active' : ''}`} onClick={() => setCurrentPage('profile')}>Profile</button>
+              <button 
+                className="nav-btn logout-btn" 
+                onClick={() => { 
+                  localStorage.removeItem('userInfo'); 
+                  setCurrentPage('home'); 
+                  window.location.reload(); 
+                }}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button className={`nav-btn login ${currentPage === 'auth' ? 'active' : ''}`} onClick={() => setCurrentPage('auth')}>Login</button>
+          )}
         </div>
       </div>
     </nav>

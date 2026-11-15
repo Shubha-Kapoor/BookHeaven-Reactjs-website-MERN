@@ -3,7 +3,6 @@ import BookCard from '../../components/BookCard/BookCard.jsx';
 import './Books.css';
 
 function Books({ books, searchQuery, setSearchQuery, selectedCategory, setSelectedCategory, onBookClick }) {
-  // Updated list containing 5 clean, distinct database categories
   const categories = ['All', 'Fiction', 'Sci-Fi', 'Fantasy', 'Biography', 'Tech'];
 
   const filteredBooks = books.filter(book => {
@@ -39,7 +38,11 @@ function Books({ books, searchQuery, setSearchQuery, selectedCategory, setSelect
       <div className="books-grid">
         {filteredBooks.length > 0 ? (
           filteredBooks.map(book => (
-            <BookCard key={book.id} book={book} onBookClick={onBookClick} />
+            <BookCard 
+              key={book._id || book.id} /* <-- Updated to support MongoDB _id */
+              book={book} 
+              onBookClick={onBookClick} 
+            />
           ))
         ) : (
           <p className="no-results">No books found matching your criteria.</p>

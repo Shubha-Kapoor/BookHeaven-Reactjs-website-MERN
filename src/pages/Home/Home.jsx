@@ -22,9 +22,13 @@ function Home({ setCurrentPage, onBookClick, books }) {
           <h2>Daily Featured Selection</h2>
         </div>
         <div className="books-grid">
-          {/* Renders card list directly */}
+          {/* Renders card list directly using MongoDB _id fallback */}
           {books.map(book => (
-            <BookCard key={book.id} book={book} onBookClick={onBookClick} />
+            <BookCard 
+              key={book._id || book.id} 
+              book={book} 
+              onBookClick={onBookClick} 
+            />
           ))}
         </div>
       </div>
@@ -32,4 +36,4 @@ function Home({ setCurrentPage, onBookClick, books }) {
   );
 }
 
-export default Home; 
+export default Home;
